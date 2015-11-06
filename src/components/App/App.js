@@ -19,19 +19,37 @@ class App extends Component {
   };
 
   render() {
-    const game = {
+    const games = [{
       home: 'Detroit',
       homeScore: 3,
       away: 'Toronto',
       awayScore: 1,
       time: '00:00',
       period: 1,
-    };
+    }, {
+      home: 'Montreal',
+      homeScore: 4,
+      away: 'Winnipeg',
+      awayScore: 1,
+      time: '33:33',
+      period: 2,
+    }, {
+      home: 'Columbus',
+      homeScore: 2,
+      away: 'Washington',
+      awayScore: 2,
+      time: '33:00',
+      period: 3,
+    }];
+
+    const scores = games.map((game) => {
+      return <Scoreboard game={game} />;
+    });
 
     return !this.props.error ? (
       <div>
         <Header />
-        <Scoreboard game={game} />
+        {scores}
         {this.props.children}
         <Feedback />
         <Footer />
