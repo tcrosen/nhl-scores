@@ -22,8 +22,6 @@ class Scoreboard extends Component {
 
 
   render() {
-    console.log(this.props);
-
     return (
       <div className="Scoreboard">
         <div className="Scoreboard-time">{this.props.game.time}</div>

@@ -1,10 +1,9 @@
 /*! React Starter Kit | MIT License | http://www.reactstarterkit.com/ */
-
 import React, { PropTypes, Component } from 'react';
 import styles from './ScoresPage.css';
 import withStyles from '../../decorators/withStyles';
 import Scoreboard from '../Scoreboard';
-import games from '../../stores/gameStore';
+import gameStore from '../../stores/gameStore';
 
 @withStyles(styles)
 class ScoresPage extends Component {
@@ -13,20 +12,33 @@ class ScoresPage extends Component {
     onSetTitle: PropTypes.func.isRequired,
   };
 
+  constructor() {
+    super();
+    this.state = { games: [] };
+  }
+
+  componentDidMount() {
+    setInterval(this.loadGames.bind(this), 500);
+  }
+
+  loadGames() {
+    this.setState({
+      games: gameStore.getAll(),
+    });
+  }
+
   render() {
     const title = 'Scores';
-    const data = games.map((game, idx) => {
-      return (
-        <Scoreboard key={idx} game={game} />
-      );
-    });
-
     this.context.onSetTitle(title);
     return (
       <div className="ScoresPage">
         <div className="ScoresPage-container">
           <h1>{title}</h1>
-          {data}
+          {this.state.games.map((game, idx) => {
+            return (
+              <Scoreboard key={idx} game={game} />
+            );
+          })}
         </div>
       </div>
     );

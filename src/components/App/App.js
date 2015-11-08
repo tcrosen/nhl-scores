@@ -5,7 +5,6 @@ import styles from './App.css';
 import withContext from '../../decorators/withContext';
 import withStyles from '../../decorators/withStyles';
 import Header from '../Header';
-import Footer from '../Footer';
 
 @withContext
 @withStyles(styles)
@@ -21,7 +20,6 @@ class App extends Component {
       <div>
         <Header />
         {this.props.children}
-        <Footer />
       </div>
     ) : this.props.children;
   }

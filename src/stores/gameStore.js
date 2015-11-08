@@ -1,22 +1,30 @@
-export default [{
-  home: 'Detroit',
-  homeScore: 3,
-  away: 'Toronto',
-  awayScore: 1,
-  time: '00:00',
-  period: 1,
-}, {
-  home: 'Montreal',
-  homeScore: 4,
-  away: 'Winnipeg',
-  awayScore: 1,
-  time: '33:33',
-  period: 2,
-}, {
-  home: 'Columbus',
-  homeScore: 2,
-  away: 'Washington',
-  awayScore: 2,
-  time: '33:00',
-  period: 3,
-}];
+import { pad, random, sample, times } from 'lodash';
+
+function getRandomScore() {
+  return random(1, 7);
+}
+
+function getRandomPeriod() {
+  return random(1, 3);
+}
+
+function getRandomTeam() {
+  return sample(['Toronto', 'Detroit', 'Winnipeg', 'Florida', 'Boston', 'Montreal', 'Ottawa', 'Carolina']);
+}
+
+function getRandomGame() {
+  return {
+    home: getRandomTeam(),
+    homeScore: getRandomScore(),
+    away: getRandomTeam(),
+    awayScore: getRandomScore(),
+    time: pad(random(1, 20), 2, '0') + ':' + pad(random(1, 59), 2, '0'),
+    period: getRandomPeriod(),
+  };
+}
+
+export default {
+  getAll() {
+    return times(15, getRandomGame);
+  },
+};

@@ -1,8 +1,10 @@
 @import '../variables.css';
 
 .Scoreboard {
-  margin: 30px auto;
+  float: left;
+  margin-right: 10px;
+  margin-bottom: 10px;
   padding: 20px;
   border: 1px solid #ddd;
-  width: 500px;
+  width: 200px;
 }
