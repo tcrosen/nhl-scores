@@ -1,30 +1,11 @@
-import { pad, random, sample, times } from 'lodash';
-
-function getRandomScore() {
-  return random(1, 7);
-}
-
-function getRandomPeriod() {
-  return random(1, 3);
-}
-
-function getRandomTeam() {
-  return sample(['Toronto', 'Detroit', 'Winnipeg', 'Florida', 'Boston', 'Montreal', 'Ottawa', 'Carolina']);
-}
-
-function getRandomGame() {
-  return {
-    home: getRandomTeam(),
-    homeScore: getRandomScore(),
-    away: getRandomTeam(),
-    awayScore: getRandomScore(),
-    time: pad(random(1, 20), 2, '0') + ':' + pad(random(1, 59), 2, '0'),
-    period: getRandomPeriod(),
-  };
-}
+import request from 'superagent';
+import jsonp from 'superagent-jsonp';
 
 export default {
-  getAll() {
-    return times(15, getRandomGame);
+  getAll(done) {
+    request
+      .get('https://www.kimonolabs.com/api/3q4kjoay?apikey=abe6b22285a4d123b8d3ed875ac78331')
+      .use(jsonp)
+      .end(done);
   },
 };

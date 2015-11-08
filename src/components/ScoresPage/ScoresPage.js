@@ -3,7 +3,7 @@ import React, { PropTypes, Component } from 'react';
 import styles from './ScoresPage.css';
 import withStyles from '../../decorators/withStyles';
 import Scoreboard from '../Scoreboard';
-import gameStore from '../../stores/gameStore';
+import GameStore from '../../stores/GameStore';
 
 @withStyles(styles)
 class ScoresPage extends Component {
@@ -18,12 +18,15 @@ class ScoresPage extends Component {
   }
 
   componentDidMount() {
-    setInterval(this.loadGames.bind(this), 500);
+    // setInterval(this.loadGames.bind(this), 2000);
+    this.loadGames();
   }
 
   loadGames() {
-    this.setState({
-      games: gameStore.getAll(),
+    GameStore.getAll((err, res) => {
+      this.setState({
+        games: res.body.results.games,
+      });
     });
   }
 

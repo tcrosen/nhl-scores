@@ -7,7 +7,7 @@ class Score extends Component {
 
   static propTypes = {
     team: PropTypes.string.isRequired,
-    score: PropTypes.number.isRequired,
+    score: PropTypes.string.isRequired,
   };
 
   render() {
