@@ -3,7 +3,7 @@ import React, { PropTypes, Component } from 'react';
 import styles from './ScoresPage.css';
 import withStyles from '../../decorators/withStyles';
 import Scoreboard from '../Scoreboard';
-import GameStore from '../../stores/GameStore';
+import GameStore from '../../stores/gameStore';
 
 @withStyles(styles)
 class ScoresPage extends Component {
@@ -14,19 +14,22 @@ class ScoresPage extends Component {
 
   constructor() {
     super();
-    this.state = { games: [] };
+    this.state = { games: GameStore.getAll() };
+    this.onChange = this.onChange.bind(this);
   }
 
-  componentDidMount() {
-    // setInterval(this.loadGames.bind(this), 2000);
-    this.loadGames();
+  componentWillMount() {
+    GameStore.addChangeListener(this.onChange);
   }
 
-  loadGames() {
-    GameStore.getAll((err, res) => {
-      this.setState({
-        games: res.body.results.games,
-      });
+  componentWillUnmount() {
+    GameStore.removeChangeListener(this.onChange);
+  }
+
+  onChange() {
+    debugger;
+    this.setState({
+      games: GameStore.getAll(),
     });
   }
 
@@ -46,7 +49,6 @@ class ScoresPage extends Component {
       </div>
     );
   }
-
 }
 
 export default ScoresPage;

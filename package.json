@@ -25,6 +25,7 @@
     "superagent-jsonp": "0.0.6"
   },
   "devDependencies": {
+    "animate.css": "^3.4.0",
     "autoprefixer": "^6.0.3",
     "babel": "^5.8.29",
     "babel-eslint": "^4.1.3",

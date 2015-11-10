@@ -13,7 +13,7 @@ class Score extends Component {
   render() {
     return (
       <div className="Score">
-        {this.props.team}: <strong>{this.props.score}</strong>
+        {this.props.team}: <strong className="animated fadeIn">{this.props.score}</strong>
       </div>
     );
   }

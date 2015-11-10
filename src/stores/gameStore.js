@@ -1,13 +1,38 @@
-import request from 'superagent';
-import jsonp from 'superagent-jsonp';
+import Dispatcher from '../core/Dispatcher';
+import { EventEmitter } from 'events';
+import ActionTypes from '../constants/ActionTypes';
 
-const KIMONO_API_KEY = 'abe6b22285a4d123b8d3ed875ac78331';
+const CHANGE_EVENT = 'change';
+let _games = [];
 
-export default {
-  getAll(done) {
-    request
-      .get(`https://www.kimonolabs.com/api/3q4kjoay?apikey=${KIMONO_API_KEY}`)
-      .use(jsonp)
-      .end(done);
+const GameStore = Object.assign({}, EventEmitter.prototype, {
+  getAll() {
+    return _games;
   },
-};
+
+  emitChange() {
+    this.emit(CHANGE_EVENT);
+  },
+
+  addChangeListener(callback) {
+    this.on(CHANGE_EVENT, callback);
+  },
+
+  removeChangeListener(callback) {
+    this.removeListener(CHANGE_EVENT, callback);
+  },
+});
+
+// Register callback to handle all updates
+Dispatcher.register((action) => {
+  switch (action.actionType) {
+  case ActionTypes.INITIALIZE:
+    _games = action.initialData.games;
+    GameStore.emitChange();
+    break;
+  default:
+    // no op
+  }
+});
+
+export default GameStore;
