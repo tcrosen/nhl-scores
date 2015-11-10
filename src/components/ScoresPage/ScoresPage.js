@@ -4,7 +4,7 @@ import styles from './ScoresPage.css';
 import withStyles from '../../decorators/withStyles';
 import Scoreboard from '../Scoreboard';
 import GameStore from '../../stores/gameStore';
-import InitializeActions from '../../actions/initializeActions';
+import TextBox from '../TextBox';
 
 @withStyles(styles)
 class ScoresPage extends Component {
@@ -15,18 +15,17 @@ class ScoresPage extends Component {
 
   constructor() {
     super();
-    this.state = { games: GameStore.getAll() };
+
+    this.state = {
+      games: GameStore.getAll(),
+      game: GameStore.getSelected(),
+    };
+
     this.onChange = this.onChange.bind(this);
   }
 
   componentWillMount() {
     GameStore.addChangeListener(this.onChange);
-  }
-
-  componentDidMount() {
-    setInterval(500, () => {
-      InitializeActions.initApp();
-    });
   }
 
   componentWillUnmount() {
@@ -36,7 +35,13 @@ class ScoresPage extends Component {
   onChange() {
     this.setState({
       games: GameStore.getAll(),
+      game: GameStore.getSelected(),
     });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    console.log(event);
   }
 
   render() {
@@ -46,6 +51,15 @@ class ScoresPage extends Component {
       <div className="ScoresPage">
         <div className="ScoresPage-container">
           <h1>{title}</h1>
+
+          <form>
+            <label>Away:</label>
+            <TextBox name="awayTeamName" value={this.state.game.away.name}/>
+            <label>Home:</label>
+            <TextBox name="homeTeamName" value={this.state.game.home.name}/>
+            <button type="submit" onClick={this.handleSubmit}>Submit</button>
+          </form>
+
           {this.state.games.map((game, idx) => {
             return (
               <Scoreboard key={idx} game={game} />

@@ -3,20 +3,27 @@ import styles from './Scoreboard.css';
 import withStyles from '../../decorators/withStyles';
 import Score from '../Score';
 import Team from '../Team';
+import GameActions from '../../actions/gameActions';
 
 @withStyles(styles)
 class Scoreboard extends Component {
-
   static propTypes = {
     game: PropTypes.object.isRequired,
+    editClick: PropTypes.fun,
   };
+
+  editClick(event) {
+    event.preventDefault();
+    GameActions.gameSelected(this.props.game);
+  }
 
   render() {
     return (
       <div className="Scoreboard">
-        <div className="Scoreboard-time">{this.props.game.gameTime}</div>
-        <Team team={this.props.game.awayTeamName.text}/><Score score={this.props.game.awayTeamScore}/>
-        <Team team={this.props.game.homeTeamName.text}/><Score score={this.props.game.homeTeamScore}/>
+        <button onClick={this.editClick.bind(this)}>Edit</button>
+        <div className="Scoreboard-time">{this.props.game.time}</div>
+        <Team team={this.props.game.away.name}/><Score score={this.props.game.away.score}/>
+        <Team team={this.props.game.home.name}/><Score score={this.props.game.home.score}/>
       </div>
     );
   }
