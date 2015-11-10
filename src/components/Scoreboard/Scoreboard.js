@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import styles from './Scoreboard.css';
 import withStyles from '../../decorators/withStyles';
 import Score from '../Score';
+import Team from '../Team';
 
 @withStyles(styles)
 class Scoreboard extends Component {
@@ -14,8 +15,8 @@ class Scoreboard extends Component {
     return (
       <div className="Scoreboard">
         <div className="Scoreboard-time">{this.props.game.gameTime}</div>
-        <Score className="Scoreboard-team" team={this.props.game.awayTeamName.text} score={this.props.game.awayTeamScore}/>
-        <Score className="Scoreboard-team" team={this.props.game.homeTeamName.text} score={this.props.game.homeTeamScore}/>
+        <Team team={this.props.game.awayTeamName.text}/><Score score={this.props.game.awayTeamScore}/>
+        <Team team={this.props.game.homeTeamName.text}/><Score score={this.props.game.homeTeamScore}/>
       </div>
     );
   }

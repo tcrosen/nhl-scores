@@ -1,4 +1,6 @@
 @import '../variables.css';
 
 .Score {
+  -webkit-animation-duration: 5s;
+  -webkit-animation-delay: 2s;
 }

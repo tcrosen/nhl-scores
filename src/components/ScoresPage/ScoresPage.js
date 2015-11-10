@@ -4,6 +4,7 @@ import styles from './ScoresPage.css';
 import withStyles from '../../decorators/withStyles';
 import Scoreboard from '../Scoreboard';
 import GameStore from '../../stores/gameStore';
+import InitializeActions from '../../actions/initializeActions';
 
 @withStyles(styles)
 class ScoresPage extends Component {
@@ -22,12 +23,17 @@ class ScoresPage extends Component {
     GameStore.addChangeListener(this.onChange);
   }
 
+  componentDidMount() {
+    setInterval(500, () => {
+      InitializeActions.initApp();
+    });
+  }
+
   componentWillUnmount() {
     GameStore.removeChangeListener(this.onChange);
   }
 
   onChange() {
-    debugger;
     this.setState({
       games: GameStore.getAll(),
     });

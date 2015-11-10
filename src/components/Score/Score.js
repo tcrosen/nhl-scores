@@ -6,15 +6,12 @@ import withStyles from '../../decorators/withStyles';
 class Score extends Component {
 
   static propTypes = {
-    team: PropTypes.string.isRequired,
-    score: PropTypes.string.isRequired,
+    score: PropTypes.number.isRequired,
   };
 
   render() {
     return (
-      <div className="Score">
-        {this.props.team}: <strong className="animated fadeIn">{this.props.score}</strong>
-      </div>
+      <strong className="Score animated fadeIn">{this.props.score}</strong>
     );
   }
 
